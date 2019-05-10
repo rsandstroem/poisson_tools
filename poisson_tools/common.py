@@ -1,4 +1,4 @@
-from scipy.stats import poisson
+from scipy.stats import poisson, norm
 from scipy.optimize import minimize
 from numpy import square
 
@@ -44,3 +44,25 @@ def find_limit(limit, n):
         poisson.isf(limit, n),
         args=(n, limit))
     return opt_result.x[0]
+
+
+def percentile_from_sigma(sigma, lower):
+    '''
+    Converts a limit in standard deviation into the corresponding
+    percentile. This function assumes a two sided interval,
+    e.g., sigma == 2 and lower == False will return 0.977.
+
+    Arguments:
+        sigma {float} -- Number of standard deviations
+        lower {bool} -- Lower True returns the lower percentile,
+        if False the upper percentile will be returned
+
+    Returns:
+        float -- The percentile as a value between 0 and 1
+    '''
+    percentile = -1
+    if lower:
+        percentile = norm.sf(sigma)
+    else:
+        percentile = norm.cdf(sigma)
+    return percentile
