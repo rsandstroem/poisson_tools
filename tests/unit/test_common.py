@@ -13,3 +13,13 @@ def test_cost_function():
 
     # Outside limits
     assert common.cost_function(20,4,0.84) > 1e-2
+
+
+def test_find_limit():
+
+    # 1 sigma low limit for 4 observed events
+    assert common.find_limit(0.16, 4) - 2.8487 < 1e-4
+
+    # 1 sigma upper limit for 4 observed events
+    assert common.find_limit(0.84, 4) - 7.1469 < 1e-4
+
