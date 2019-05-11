@@ -4,7 +4,7 @@ from numpy import square
 
 
 def cost_function(mu, n, target):
-    '''
+    """
     Calculates the squared distance between the
     survival function (1-cdf) of a poisson function
     with rate mu and n observations and a
@@ -18,13 +18,13 @@ def cost_function(mu, n, target):
     Returns:
         float -- Squared distance between the survival rate
         and the target
-    '''
+    """
 
     return square(poisson.sf(n, mu)-target)
 
 
 def find_limit(limit, n):
-    '''
+    """
     Finds the limit of the event rate parameter
     corresponding to the desired survival rate
     of the poisson distribution through minimization.
@@ -37,17 +37,21 @@ def find_limit(limit, n):
 
     Returns:
         float -- The event rate (mu) corresponding to the limit
-    '''
+    """
 
     opt_result = minimize(
         cost_function,
-        poisson.isf(limit, n),
-        args=(n, limit))
-    return opt_result.x[0]
+        poisson.ppf(limit, n),
+        args=(n, limit),
+        bounds=[(0, None)])
+    if opt_result.success:
+        return opt_result.x[0]
+    print(opt_result)
+    return None
 
 
 def percentile_from_sigma(sigma, lower):
-    '''
+    """
     Converts a limit in standard deviation into the corresponding
     percentile. This function assumes a two sided interval,
     e.g., sigma == 2 and lower == False will return 0.977.
@@ -59,7 +63,7 @@ def percentile_from_sigma(sigma, lower):
 
     Returns:
         float -- The percentile as a value between 0 and 1
-    '''
+    """
     percentile = -1
     if lower:
         percentile = norm.sf(sigma)
