@@ -20,7 +20,7 @@ def cost_function(mu, n, target):
         and the target
     """
 
-    return square(poisson.sf(n, mu)-target)
+    return square(poisson.sf(n, mu) - target)
 
 
 def find_limit(limit, n):
@@ -41,8 +41,11 @@ def find_limit(limit, n):
 
     opt_result = minimize(
         cost_function,
-        poisson.ppf(limit, n),
+        # poisson.ppf(limit, n),
+        n,
         args=(n, limit),
+        method='L-BFGS-B',
+        tol=1e-5,
         bounds=[(0, None)])
     if opt_result.success:
         return opt_result.x[0]
