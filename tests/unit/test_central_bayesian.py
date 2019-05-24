@@ -1,11 +1,11 @@
-import numpy as np
+from numpy import testing
 
 from poisson_tools import central_bayesian as cb
 
 
 def test_statistical_uncertainty():
     # TODO: correct these values
-    np.testing.assert_allclose(
+    testing.assert_allclose(
         cb.statistical_uncertainty([0, 1, 2, 3, 4]),
         [
             [0.,
@@ -25,7 +25,7 @@ def test_statistical_uncertainty():
 
 def test_statistical_confidence_interval():
     # TODO: correct these values
-    np.testing.assert_allclose(
+    testing.assert_allclose(
         cb.statistical_confidence_interval([0, 1, 2, 3, 4]),
         [
             [0.,
@@ -42,7 +42,7 @@ def test_statistical_confidence_interval():
         rtol=1e-2
     )
 
-    np.testing.assert_allclose(
+    testing.assert_allclose(
         cb.statistical_confidence_interval(
             [0, 1, 2, 3, 4],
             sigma=1.96),
