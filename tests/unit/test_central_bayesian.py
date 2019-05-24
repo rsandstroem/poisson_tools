@@ -23,7 +23,7 @@ def test_statistical_uncertainty():
     )
 
 
-def test_statistical_confidence_interval():
+def test_statistical_ci():
     # TODO: correct these values
     testing.assert_allclose(
         cb.statistical_confidence_interval([0, 1, 2, 3, 4]),

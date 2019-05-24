@@ -73,3 +73,13 @@ def percentile_from_sigma(sigma, lower):
     else:
         percentile = norm.cdf(sigma)
     return percentile
+
+
+def two_sided_interval_percentiles(confidence_level, sigma):
+    if confidence_level:
+        percentile_low = 0.5*(1-confidence_level)
+        percentile_high = 0.5*(1+confidence_level)
+    else:
+        percentile_low = percentile_from_sigma(sigma, lower=True)
+        percentile_high = percentile_from_sigma(sigma, lower=False)
+    return percentile_low, percentile_high

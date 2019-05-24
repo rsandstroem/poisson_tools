@@ -48,3 +48,14 @@ def test_percentile_from_sigma():
         0.97725,
         decimal=4
     )
+
+
+def test_two_sided_interval_percentiles():
+
+    testing.assert_allclose(
+        common.two_sided_interval_percentiles(
+            sigma=None, confidence_level=0.95),
+        common.two_sided_interval_percentiles(
+            sigma=1.956, confidence_level=None),
+        rtol=1e-2
+    )
