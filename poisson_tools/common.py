@@ -61,7 +61,7 @@ def percentile_from_sigma(sigma, lower):
 
     Arguments:
         sigma {float} -- Number of standard deviations
-        lower {bool} -- Lower True returns the lower percentile,
+        lower {bool} -- If lower == True returns the lower percentile,
         if False the upper percentile will be returned
 
     Returns:

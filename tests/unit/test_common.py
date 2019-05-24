@@ -1,4 +1,5 @@
 from poisson_tools import common
+from numpy import testing
 
 
 def test_cost_function():
@@ -23,3 +24,27 @@ def test_find_limit():
 
     # 1 sigma upper limit for 4 observed events
     assert common.find_limit(0.8413447, 4) - 7.16 < 1e-2
+
+
+def test_percentile_from_sigma():
+
+    # 1 sigma lower percentile
+    testing.assert_almost_equal(
+        common.percentile_from_sigma(1, lower=True),
+        0.158655,
+        decimal=4
+    )
+
+    # 2 sigma lower percentile
+    testing.assert_almost_equal(
+        common.percentile_from_sigma(2, lower=True),
+        0.022750,
+        decimal=4
+    )
+
+    # 2 sigma upper percentile
+    testing.assert_almost_equal(
+        common.percentile_from_sigma(2, lower=False),
+        0.97725,
+        decimal=4
+    )
