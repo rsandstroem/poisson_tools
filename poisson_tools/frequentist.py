@@ -19,13 +19,13 @@ def statistical_uncertainty(y, sigma=1, confidence_level=None):
 
     Returns:
         [list] -- A list containing two arrays,
-        the first array is the lower uncertainty bound,
-        the second array is the upper uncertainty bound.
+        the first array is the lower uncertainty,
+        the second array is the upper uncertainty.
         The arrays have the same length as y.
     """
     confidence_interval = statistical_confidence_interval(
         y, sigma, confidence_level)
-    return np.array(confidence_interval) - y
+    return np.abs(np.array(confidence_interval) - y)
 
 
 def statistical_confidence_interval(y, sigma=1, confidence_level=None):
