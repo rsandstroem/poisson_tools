@@ -2,7 +2,7 @@ import numpy as np
 from poisson_tools import common
 
 
-def statistical_uncertainty(y, sigma=1, cl=None):
+def statistical_uncertainty(y, sigma=1, confidence_level=None):
     """
     Calculates the statistical uncertainty
     for an array y of observed Poisson events y_i.
@@ -23,11 +23,12 @@ def statistical_uncertainty(y, sigma=1, cl=None):
         the second array is the upper uncertainty bound.
         The arrays have the same length as y.
     """
-    ci = statistical_confidence_interval(y, sigma, cl)
-    return np.array(ci) - y
+    confidence_interval = statistical_confidence_interval(
+        y, sigma, confidence_level)
+    return np.array(confidence_interval) - y
 
 
-def statistical_confidence_interval(y, sigma=1, cl=None):
+def statistical_confidence_interval(y, sigma=1, confidence_level=None):
     """
     Calculates the statistical confidence interval
     for an array y of observed Poisson events y_i.
@@ -48,8 +49,13 @@ def statistical_confidence_interval(y, sigma=1, cl=None):
         the second array is the upper confidence interval bound.
         The arrays have the same length as y.
     """
-    percentile_low = common.percentile_from_sigma(sigma, lower=True)
-    percentile_high = common.percentile_from_sigma(sigma, lower=False)
+    if confidence_level:
+        percentile_low = 0.5*(1-confidence_level)
+        percentile_high = 0.5*(1+confidence_level)
+    else:
+        percentile_low = common.percentile_from_sigma(sigma, lower=True)
+        percentile_high = common.percentile_from_sigma(sigma, lower=False)
+
     y_low = [np.min([float(y_i),
                      common.find_limit(percentile_low, y_i - 1)]) for y_i in y]
     y_high = [np.max([float(y_i),

@@ -1,11 +1,11 @@
-import numpy as np
+from numpy import testing
 
 from poisson_tools import frequentist as fr
 
 
 def test_statistical_uncertainty():
     # TODO: correct these values
-    np.testing.assert_allclose(
+    testing.assert_allclose(
         fr.statistical_uncertainty([0, 1, 2, 3, 4]),
         [[0.,
           -0.82723962,
@@ -24,7 +24,7 @@ def test_statistical_uncertainty():
 
 def test_statistical_confidence_interval():
     # TODO: correct these values
-    np.testing.assert_allclose(
+    testing.assert_allclose(
         fr.statistical_confidence_interval([0, 1, 2, 3, 4]),
         [[0.0,
           0.17276038,
@@ -37,5 +37,15 @@ def test_statistical_confidence_interval():
           5.917688891,
           7.162502454]
          ],
+        rtol=1e-2
+    )
+
+    testing.assert_allclose(
+        fr.statistical_confidence_interval(
+            [0, 1, 2, 3, 4],
+            sigma=1.96),
+        fr.statistical_confidence_interval(
+            [0, 1, 2, 3, 4],
+            confidence_level=0.95),
         rtol=1e-2
     )
